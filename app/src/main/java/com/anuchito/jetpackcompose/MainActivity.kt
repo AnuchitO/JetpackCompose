@@ -35,21 +35,27 @@ fun App(content: @Composable () -> Unit) {
 
 @Composable
 fun ScreenContent(names: List<String> = listOf("AnuchitO!!", "Nong")) {
+    var count by remember {
+        mutableStateOf(0)
+    }
     Column {
         for (name in names) {
             Greeting(name = name)
             Divider()
         }
-        Counter()
+        Counter(
+            count = count,
+            updateCount = { newCount -> count = newCount }
+        )
+        if (count >5) {
+            Greeting(name = "Awesome!!! $count")
+        }
     }
 }
 
 @Composable
-fun Counter() {
-    var count by remember {
-        mutableStateOf(0)
-    }
-    Button(onClick = { count++ }) {
+fun Counter(count: Int, updateCount: (Int) -> Unit) {
+    Button(onClick = { updateCount(count + 1) }) {
         Text(text = "I've been clicked $count times.")
     }
 }
