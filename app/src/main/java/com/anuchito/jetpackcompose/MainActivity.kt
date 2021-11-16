@@ -3,11 +3,15 @@ package com.anuchito.jetpackcompose
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.anuchito.jetpackcompose.ui.theme.JetpackComposeTheme
@@ -39,16 +43,23 @@ fun ScreenContent(names: List<String> = listOf("AnuchitO!!", "Nong")) {
         mutableStateOf(0)
     }
     Column {
-        for (name in names) {
-            Greeting(name = name)
-            Divider()
-        }
+        Names(names, Modifier)
         Counter(
             count = count,
             updateCount = { newCount -> count = newCount }
         )
-        if (count >5) {
+        if (count > 5) {
             Greeting(name = "Awesome!!! $count")
+        }
+    }
+}
+
+@Composable
+fun Names(names: List<String>, modifier: Modifier = Modifier) {
+    LazyColumn(modifier = modifier) {
+        items(items = names) {
+            Greeting(name = it)
+            Divider()
         }
     }
 }
@@ -62,10 +73,19 @@ fun Counter(count: Int, updateCount: (Int) -> Unit) {
 
 @Composable
 fun Greeting(name: String) {
-    Text(
-        text = "Voila $name",
-        modifier = Modifier.padding(16.dp)
-    )
+    var isSelected by remember {
+        mutableStateOf(false)
+    }
+
+    var color = if (isSelected) Color.Red else Color.Transparent
+    Surface(color = color) {
+        Text(
+            text = "Voila $name",
+            modifier = Modifier
+                .clickable { isSelected = !isSelected }
+                .padding(16.dp)
+        )
+    }
 }
 
 @Preview(showBackground = true, showSystemUi = true)
