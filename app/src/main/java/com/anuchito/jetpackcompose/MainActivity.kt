@@ -50,7 +50,7 @@ fun Greeting(name: String) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun DefaultPreview() {
-    JetpackComposeTheme {
-        Greeting("AnuchitO!")
+    App {
+        ScreenContent()
     }
 }
