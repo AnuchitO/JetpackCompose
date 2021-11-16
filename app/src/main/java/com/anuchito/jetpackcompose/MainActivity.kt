@@ -37,18 +37,19 @@ fun App(content: @Composable () -> Unit) {
 }
 
 @Composable
-fun ScreenContent() {
+fun ScreenContent(names: List<String> = listOf("AnuchitO!!", "Nong")) {
     Column {
-        Greeting(name = "AnuchitO!!!")
-        Divider()
-        Greeting(name = "Nong!!")
+        for (name in names) {
+            Greeting(name = name)
+            Divider()
+        }
     }
 }
 
 @Composable
 fun Greeting(name: String) {
     Text(
-        text = "Voila $name!",
+        text = "Voila $name",
         modifier = Modifier.padding(16.dp)
     )
 }
