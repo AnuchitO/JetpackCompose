@@ -14,19 +14,27 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            JetpackComposeTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background) {
-                    Greeting("AnuchitO")
-                }
+            App() {
+                Greeting("AnuchitO")
             }
         }
     }
 }
 
 @Composable
+fun App(content: @Composable () -> Unit) {
+    JetpackComposeTheme {
+        // A surface container using the 'background' color from the theme
+        Surface(color = MaterialTheme.colors.background) {
+            content()
+        }
+    }
+}
+
+
+@Composable
 fun Greeting(name: String) {
-    Text(text = "Hello $name!")
+    Text(text = "Voila $name!")
 }
 
 @Preview(showBackground = true, showSystemUi = true)
